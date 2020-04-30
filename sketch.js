@@ -40,6 +40,7 @@ function setup() {
 
 function draw() {
     background(51);
+    colorMode(HSB);
     // console.log("webcam");
     // image(capture, (1280-960)/2, 0, 960, 720);
 
@@ -78,7 +79,7 @@ function draw() {
                 }
             }
         }
-        shootingStarSystem.addParticle(position, velocity.mult(30), 70);
+        shootingStarSystem.addParticle(position, velocity.mult(2), 70);
         gate = 0;
     }
     if (!notes[48]) {
@@ -87,18 +88,27 @@ function draw() {
 
     shootingStarSystem.run();
 
+    console.log(notes);
+    if (notes[38]) {
+        fill(0, 0, 0);
+        rect(0, 0, width, height);
+    }
+    if (notes[39]) {
+        fill(0, 0, 100);
+        rect(0, 0, width, height);
+    }
 }
 
 // A simple Particle class
 let Particle = function(position, velocity, lifespan) {
-    this.acceleration = 1.1;
+    this.acceleration = 1.2;
     this.velocity = velocity.copy();
     this.position = position.copy();
     this.lifespan = lifespan;
     this.maxlifespan = lifespan;
     this.trail = [];
-    this.maxTrail = 50;
-    this.size = 50;
+    this.maxTrail = 10;
+    this.size = 10;
 };
 
 Particle.prototype.run = function() {
@@ -112,19 +122,6 @@ Particle.prototype.update = function(){
     this.position.add(this.velocity);
     this.lifespan -= 2;
     this.trail.push(this.position.copy());
-};
-
-// Method to display
-Particle.prototype.display = function() {
-    colorMode(HSB);
-    noStroke();
-    if (sliders[3]) {
-        c = sliders[3] * 255;
-    }
-    fill(c, 20 * (this.maxlifespan*3)/this.lifespan, 255, this.lifespan);
-    sizeMult = this.maxlifespan / this.lifespan;
-    ellipse(this.position.x, this.position.y, this.size*sizeMult);
-
     //removes poses that are older than 50
     if (this.trail.length > this.maxTrail) {
   	    this.trail.shift();
@@ -132,6 +129,26 @@ Particle.prototype.display = function() {
     for (let i = 0; i < this.trail.length; i +=1) {
         // how you want to draw the previous poses
         // relate it to i to change pose drawing over time
+        trailVelocity = this.velocity.copy().mult(0.2);
+        this.trail[i].add(trailVelocity);
+    }
+};
+
+// Method to display
+Particle.prototype.display = function() {
+    noStroke();
+    let s = (this.lifespan/this.maxlifespan) * 100;
+    if (sliders[3]) {
+        c = sliders[3] * 360;
+    }
+    fill(c, s, 255, this.lifespan/this.maxlifespan);
+    sizeMult = this.maxlifespan / this.lifespan;
+    ellipse(this.position.x, this.position.y, this.size*sizeMult);
+
+    for (let i = 0; i < this.trail.length; i +=1) {
+        // how you want to draw the previous poses
+        // relate it to i to change pose drawing over time
+        fill(c, s * (this.maxTrail/i), 255, this.lifespan/this.maxlifespan);
   	    ellipse(this.trail[i].x, this.trail[i].y, this.size * 5 * (i/this.maxTrail));
     }
 };
