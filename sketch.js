@@ -96,6 +96,9 @@ let Particle = function(position, velocity, lifespan) {
     this.position = position.copy();
     this.lifespan = lifespan;
     this.maxlifespan = lifespan;
+    this.trail = [];
+    this.maxTrail = 50;
+    this.size = 50;
 };
 
 Particle.prototype.run = function() {
@@ -108,6 +111,7 @@ Particle.prototype.update = function(){
     this.velocity.mult(this.acceleration);
     this.position.add(this.velocity);
     this.lifespan -= 2;
+    this.trail.push(this.position.copy());
 };
 
 // Method to display
@@ -118,8 +122,18 @@ Particle.prototype.display = function() {
         c = sliders[3] * 255;
     }
     fill(c, 20 * (this.maxlifespan*3)/this.lifespan, 255, this.lifespan);
-    sizeMult = this.lifespan / this.maxlifespan;
-    ellipse(this.position.x, this.position.y, 50*sizeMult);
+    sizeMult = this.maxlifespan / this.lifespan;
+    ellipse(this.position.x, this.position.y, this.size*sizeMult);
+
+    //removes poses that are older than 50
+    if (this.trail.length > this.maxTrail) {
+  	    this.trail.shift();
+    }
+    for (let i = 0; i < this.trail.length; i +=1) {
+        // how you want to draw the previous poses
+        // relate it to i to change pose drawing over time
+  	    ellipse(this.trail[i].x, this.trail[i].y, this.size * 5 * (i/this.maxTrail));
+    }
 };
 
 // Is the particle still useful?
