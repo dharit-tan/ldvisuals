@@ -40,7 +40,7 @@ function draw() {
     background(51);
     image(capture, (1280-960)/2, 0, 960, 720);
 
-    translate(width/2,-height/2);
+    translate(width/2+500,-height/2);
     rotate(PI / 4.0);
     system.addParticle();
     system.run();
@@ -87,14 +87,12 @@ Particle.prototype.isDead = function(){
     return this.lifespan < 0;
 };
 
-let ParticleSystem = function(position) {
-    this.origin = position.copy();
+let ParticleSystem = function() {
     this.particles = [];
 };
 
 ParticleSystem.prototype.addParticle = function() {
     this.particles.push(new Particle(createVector(windowWidth * random(-1,1), 50)));
-    // this.particles.push(new Particle(this.origin) );
 };
 
 ParticleSystem.prototype.run = function() {
