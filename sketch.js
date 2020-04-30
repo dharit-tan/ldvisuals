@@ -24,34 +24,78 @@ WebMidi.enable(function (err) {
     };
 });
 
-let system, c;
+let particleSystem, shootingStarSystem, c, gate;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    capture = createCapture(VIDEO);
-    capture.size(windowWidth, windowHeight);
     colorMode(HSB);
+    // capture = createCapture(VIDEO);
+    // capture.size(windowWidth, windowHeight);
 
-    system = new ParticleSystem(createVector(width / 2, 50));
+    shootingStarSystem = new ParticleSystem();
+    particleSystem = new ParticleSystem();
     c = 0;
+    gate = 0;
 }
 
 function draw() {
     background(51);
-    image(capture, (1280-960)/2, 0, 960, 720);
+    // console.log("webcam");
+    // image(capture, (1280-960)/2, 0, 960, 720);
 
-    translate(width/2+500,-height/2);
-    rotate(PI / 4.0);
-    system.addParticle();
-    system.run();
+    if (notes[48] && gate) {
+        let position, velocity;
+        var randomBoolean1 = random() >= 0.5;
+        var randomBoolean2 = random() >= 0.5;
+        if (randomBoolean2) { // on width edge case
+            position = createVector(width*randomBoolean1, height*random());
+            if (!randomBoolean1) {
+                if (position.y >= height * 0.5) {
+                    velocity = createVector(1, -random());
+                } else {
+                    velocity = createVector(1,random());
+                }
+            } else {
+                if (position.y >= height * 0.5) {
+                    velocity = createVector(-1,-random());
+                } else {
+                    velocity = createVector(-1,random());
+                }
+            }
+        } else {
+            position = createVector(width*random(0,1), height*randomBoolean1);
+            if (!randomBoolean1) {
+                if (position.x >= width * 0.5) {
+                    velocity = createVector(-random(),1);
+                } else {
+                    velocity = createVector(random(),1);
+                }
+            } else {
+                if (position.x >= width * 0.5) {
+                    velocity = createVector(-random(),-1);
+                } else {
+                    velocity = createVector(random(),-1);
+                }
+            }
+        }
+        shootingStarSystem.addParticle(position, velocity.mult(30), 70);
+        gate = 0;
+    }
+    if (!notes[48]) {
+        gate = 1;
+    }
+
+    shootingStarSystem.run();
+
 }
 
 // A simple Particle class
-let Particle = function(position) {
-    this.acceleration = createVector(0, 0.1);
-    this.velocity = createVector(random(-1, 1), random(-1, 0));
+let Particle = function(position, velocity, lifespan) {
+    this.acceleration = 1.1;
+    this.velocity = velocity.copy();
     this.position = position.copy();
-    this.lifespan = 400;
+    this.lifespan = lifespan;
+    this.maxlifespan = lifespan;
 };
 
 Particle.prototype.run = function() {
@@ -61,25 +105,21 @@ Particle.prototype.run = function() {
 
 // Method to update position
 Particle.prototype.update = function(){
-    this.velocity.add(this.acceleration);
+    this.velocity.mult(this.acceleration);
     this.position.add(this.velocity);
     this.lifespan -= 2;
 };
 
 // Method to display
 Particle.prototype.display = function() {
-    if (sliders[1]) {
-        c = sliders[1] * 255;
+    colorMode(HSB);
+    noStroke();
+    if (sliders[3]) {
+        c = sliders[3] * 255;
     }
-    stroke(c, 255, 255, (this.lifespan/400) * 255);
-    strokeWeight(2);
-    fill(c, 255, 255, this.lifespan);
-    let sizeMult;
-
-    if (sliders[3]){
-        sizeMult = sliders[3];
-    }
-    ellipse(this.position.x, this.position.y, 12*sizeMult);
+    fill(c, 20 * (this.maxlifespan*3)/this.lifespan, 255, this.lifespan);
+    sizeMult = this.lifespan / this.maxlifespan;
+    ellipse(this.position.x, this.position.y, 50*sizeMult);
 };
 
 // Is the particle still useful?
@@ -91,8 +131,9 @@ let ParticleSystem = function() {
     this.particles = [];
 };
 
-ParticleSystem.prototype.addParticle = function() {
-    this.particles.push(new Particle(createVector(windowWidth * random(-1,1), 50)));
+ParticleSystem.prototype.addParticle = function(position, velocity, lifespan) {
+    this.particles.push(new Particle(position, velocity, lifespan));
+
 };
 
 ParticleSystem.prototype.run = function() {
