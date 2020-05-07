@@ -29,8 +29,11 @@ let particleSystem, shootingStarSystem, c, gate;
 function setup() {
     createCanvas(windowWidth, windowHeight);
     colorMode(HSB);
-    // capture = createCapture(VIDEO);
-    // capture.size(windowWidth, windowHeight);
+    ldlogo = loadImage('assets/ld-logo.png');
+    ldlogolg = loadImage('assets/ld-logo-large.png');
+    sdlogo = loadImage('assets/sd-logo.png');
+    capture = createCapture(VIDEO);
+    capture.size(windowWidth, windowHeight);
 
     shootingStarSystem = new ParticleSystem();
     particleSystem = new ParticleSystem();
@@ -41,8 +44,27 @@ function setup() {
 function draw() {
     background(51);
     colorMode(HSB);
-    // console.log("webcam");
-    // image(capture, (1280-960)/2, 0, 960, 720);
+    image(capture, (1280-960)/2, 0, 960, 720);
+
+    // console.log(width);
+    if (notes[0]) {
+        image(ldlogo, 15, 15, 60, 60);
+        image(sdlogo, width-95, 15, 60, 60);
+    } else {
+        image(ldlogo, 10, 10, 70, 70);
+        image(sdlogo, width-100, 10, 70, 70);
+    }
+
+    // Bongo fill D1 & Eb1
+    if (notes[38]) {
+        fill(0, 0, 0);
+        rect(0, 0, width, height);
+        image(ldlogolg, (width-ldlogolg.width)/2, (height-ldlogolg.height)/2);
+    }
+    if (notes[39]) {
+        fill(0, 0, 100);
+        rect(0, 0, width, height);
+    }
 
     // Shooting stars on C4
     if (notes[48] && gate) {
@@ -89,13 +111,4 @@ function draw() {
 
     shootingStarSystem.run();
 
-    // Bongo fill D1 & Eb1
-    if (notes[38]) {
-        fill(0, 0, 0);
-        rect(0, 0, width, height);
-    }
-    if (notes[39]) {
-        fill(0, 0, 100);
-        rect(0, 0, width, height);
-    }
 }
