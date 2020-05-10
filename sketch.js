@@ -7,7 +7,7 @@ WebMidi.enable(function (err) {
         console.log("WebMidi could not be enabled.", err);
     } else {
         // Retrieve an input by name, id or index
-        var input = WebMidi.getInputByName("IAC Driver Bus 1");
+        var input = WebMidi.getInputByName("LoopBe Internal MIDI");
 
         // Listen for a 'cc' message on all channels
         input.addListener('controlchange', "all", function (e) {
