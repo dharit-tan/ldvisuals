@@ -8,7 +8,7 @@ WebMidi.enable(function (err) {
     } else {
         // Retrieve an input by name, id or index
         // var input = WebMidi.getInputByName("LoopBe Internal MIDI");
-        var input = WebMidi.getInputByName("IAC Driver)");
+        var input = WebMidi.getInputByName("IAC Driver Bus 1");
 
         // Listen for a 'cc' message on all channels
         input.addListener('controlchange', "all", function (e) {
@@ -29,11 +29,12 @@ let particleSystem, shootingStarSystem, c, gate;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    ldlogo = loadImage('assets/ld-logo.png');
+    ldlogo = loadImage('assets/ld-logo-circle.png');
     ldlogolg = loadImage('assets/ld-logo-large.png');
     // sdlogo = loadImage('assets/sd-logo.png');
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
+    banner = loadImage('assets/banner.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
     // capture = createCapture(VIDEO);
     // capture.size(windowWidth, windowHeight);
@@ -44,7 +45,8 @@ function setup() {
     shootingStarSystem = new ParticleSystem();
     particleSystem = new ParticleSystem();
     c = 0;
-    gate = 0;
+    gate0 = 0;
+    gate1 = 0;
 }
 
 function vidLoad() {
@@ -53,6 +55,7 @@ function vidLoad() {
 }
 
 function draw() {
+    // console.log(notes);
     background(51);
     colorMode(HSB);
     rectMode(CENTER);
@@ -61,24 +64,21 @@ function draw() {
     // image(capture, width/2, height/2, 960, 720);
     image(space, width/2, height/2, width, height);
 
-    push();
-    imageMode(CORNER);
-    if (notes[0]) {
-        image(ldlogo, 15, 15, 60, 60);
-        // image(sdlogo, width-95, 15, 60, 60);
-    } else {
-        image(ldlogo, 10, 10, 70, 70);
-        // image(sdlogo, width-100, 10, 70, 70);
-    }
-    pop();
-
     // Shooting stars on C4
-    if (notes[48] && gate) {
+    if (notes[48] && gate0) {
         ufos.addUFO(createVector(0, height/2 * random()), createVector(10, 0));
-        gate = 0;
+        gate0 = 0;
     }
     if (!notes[48]) {
-        gate = 1;
+        gate0 = 1;
+    }
+
+    if (notes[49] && gate1) {
+        cats.addCat(createVector(width * random(), height * 2/3 * random()));
+        gate1 = 0;
+    }
+    if (!notes[49]) {
+        gate1 = 1;
     }
 
     ufos.run();
@@ -93,5 +93,13 @@ function draw() {
     if (notes[39]) {
         fill(0, 0, 100);
         rect(width/2, height/2, width, height);
+    }
+
+    if (notes[0]) {
+        image(ldlogo, 90, 90, 100, 100);
+        // image(banner, 15, 50, 60, 60);
+    } else {
+        image(ldlogo, 90, 90, 120, 120);
+        // image(banner, 15, 50, 70, 70);
     }
 }
