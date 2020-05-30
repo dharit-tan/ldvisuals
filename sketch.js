@@ -7,8 +7,8 @@ WebMidi.enable(function (err) {
         console.log("WebMidi could not be enabled.", err);
     } else {
         // Retrieve an input by name, id or index
-        var input = WebMidi.getInputByName("LoopBe Internal MIDI");
-        // var input = WebMidi.getInputByName("IAC Driver Bus 1");
+        // var input = WebMidi.getInputByName("LoopBe Internal MIDI");
+        var input = WebMidi.getInputByName("IAC Driver Bus 1");
 
         // Listen for a 'cc' message on all channels
         input.addListener('controlchange', "all", function (e) {
@@ -31,10 +31,11 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     ldlogo = loadImage('assets/ld-logo-circle.png');
     ldlogolg = loadImage('assets/ld-logo-large.png');
-    // sdlogo = loadImage('assets/sd-logo.png');
+    blm = loadImage('assets/blacklivesmatter.png');
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
+    tfc = loadImage('assets/tfc1.png');
     bannerblack = loadImage('assets/bannerblack.png');
     bannerwhite = loadImage('assets/bannerwhite.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
@@ -44,6 +45,7 @@ function setup() {
     ufos = new UFOSystem();
     cats = new CatSystem();
     reeds = new CatSystem();
+    tfcs = new CatSystem();
 
     shootingStarSystem = new ParticleSystem();
     particleSystem = new ParticleSystem();
@@ -96,7 +98,9 @@ function draw() {
         gate2 = 1;
     }
 
+    // TFC on D#2
     if (notes[51] && gate3) {
+        tfcs.addCat(createVector(width * random(), height * 2/3 * random()), tfc);
         gate3 = 0;
     }
     if (!notes[50]) {
@@ -106,6 +110,7 @@ function draw() {
     ufos.run();
     cats.run();
     reeds.run();
+    tfcs.run();
 
     // Strobe D1 & Eb1
     if (notes[38]) {
@@ -120,9 +125,11 @@ function draw() {
 
     if (notes[0]) {
         image(ldlogo, 80, 80, 90, 90);
+        image(blm, 80, height-80, blm.width*0.9, blm.height*0.9);
         // image(bannerblack, 150, height-30, 300, 80);
     } else {
         image(ldlogo, 80, 80, 100, 100);
+        image(blm, 80, height-80);
         // image(bannerwhite, 150, height-30, 300, 80);
     }
 

@@ -1,6 +1,6 @@
 let Cat = function(position, img) {
     this.position = position.copy();
-    this.lifetime = 90;
+    this.lifetime = 300;
     this.img = img;
     if (random() > 0.5) {
         this.start = -1;
@@ -29,7 +29,7 @@ Cat.prototype.display = function() {
         rotate(-this.start * PI/6);
     }
     imageMode(CENTER);
-    image(this.img, 0, 0, this.img.width*0.6, this.img.height*0.6);
+    image(this.img, 0, 0, this.img.width*0.8, this.img.height*0.8);
     pop();
 };
 
