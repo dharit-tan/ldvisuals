@@ -35,7 +35,8 @@ function setup() {
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
-    banner = loadImage('assets/banner.png');
+    bannerblack = loadImage('assets/bannerblack.png');
+    bannerwhite = loadImage('assets/bannerwhite.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
     // capture = createCapture(VIDEO);
     // capture.size(windowWidth, windowHeight);
@@ -49,6 +50,8 @@ function setup() {
     c = 0;
     gate0 = 0;
     gate1 = 0;
+    gate2 = 0;
+    gate3 = 0;
 }
 
 function vidLoad() {
@@ -93,6 +96,13 @@ function draw() {
         gate2 = 1;
     }
 
+    if (notes[51] && gate3) {
+        gate3 = 0;
+    }
+    if (!notes[50]) {
+        gate3 = 1;
+    }
+
     ufos.run();
     cats.run();
     reeds.run();
@@ -109,11 +119,11 @@ function draw() {
     }
 
     if (notes[0]) {
-        image(ldlogo, 80, 80, 100, 100);
-        // image(banner, 15, 50, 60, 60);
+        image(ldlogo, 80, 80, 90, 90);
+        // image(bannerblack, 150, height-30, 300, 80);
     } else {
-        image(ldlogo, 80, 80, 120, 120);
-        // image(banner, 15, 50, 70, 70);
+        image(ldlogo, 80, 80, 100, 100);
+        // image(bannerwhite, 150, height-30, 300, 80);
     }
 
     // rectMode(CORNER);
