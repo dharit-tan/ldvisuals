@@ -31,7 +31,6 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     ldlogo = loadImage('assets/ld-logo-circle.png');
     ldlogolg = loadImage('assets/ld-logo-large.png');
-    blm = loadImage('assets/blacklivesmatter.png');
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
@@ -125,11 +124,9 @@ function draw() {
 
     if (notes[0]) {
         image(ldlogo, 80, 80, 90, 90);
-        image(blm, 80, height-80, blm.width*0.9, blm.height*0.9);
         // image(bannerblack, 150, height-30, 300, 80);
     } else {
         image(ldlogo, 80, 80, 100, 100);
-        image(blm, 80, height-80);
         // image(bannerwhite, 150, height-30, 300, 80);
     }
 
