@@ -44,7 +44,7 @@ function setup() {
     ufos = new UFOSystem();
     cats = new CatSystem();
     reeds = new CatSystem();
-    ds = new CatSystem();
+    ds = new LogoSystem();
 
     shootingStarSystem = new ParticleSystem();
     particleSystem = new ParticleSystem();
@@ -99,7 +99,7 @@ function draw() {
 
     // Deep State Logo on D#2
     if (notes[51] && gate3) {
-        ds.addCat(createVector(width * random(), height * 2/3 * random()), dslogo);
+        ds.addLogo(createVector(width * random(), height * 2/3 * random()), dslogo);
         gate3 = 0;
     }
     if (!notes[50]) {
