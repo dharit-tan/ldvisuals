@@ -34,7 +34,7 @@ function setup() {
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
-    dslogo = loadImage('assets/deepstatelogo.jpg');
+    dslogo = loadImage('assets/deepstatelogo.png');
     bannerblack = loadImage('assets/bannerblack.png');
     bannerwhite = loadImage('assets/bannerwhite.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
