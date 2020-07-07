@@ -35,7 +35,7 @@ function setup() {
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
-    tfc = loadImage('assets/tfc1.png');
+    dslogo = loadImage('assets/deepstatelogo.png');
     bannerblack = loadImage('assets/bannerblack.png');
     bannerwhite = loadImage('assets/bannerwhite.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
@@ -45,7 +45,7 @@ function setup() {
     ufos = new UFOSystem();
     cats = new CatSystem();
     reeds = new CatSystem();
-    tfcs = new CatSystem();
+    ds = new CatSystem();
 
     shootingStarSystem = new ParticleSystem();
     particleSystem = new ParticleSystem();
@@ -98,9 +98,9 @@ function draw() {
         gate2 = 1;
     }
 
-    // TFC on D#2
+    // Deep State Logo on D#2
     if (notes[51] && gate3) {
-        tfcs.addCat(createVector(width * random(), height * 2/3 * random()), tfc);
+        ds.addCat(createVector(width * random(), height * 2/3 * random()), dslogo);
         gate3 = 0;
     }
     if (!notes[50]) {
@@ -110,7 +110,7 @@ function draw() {
     ufos.run();
     cats.run();
     reeds.run();
-    tfcs.run();
+    ds.run();
 
     // Strobe D1 & Eb1
     if (notes[38]) {
