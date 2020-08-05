@@ -20,17 +20,18 @@ Logo.prototype.update = function() {
 
 // Method to display
 Logo.prototype.display = function() {
-    push();
+    // push();
     if (notes[0]) {
-        translate(this.position.x, this.position.y);
-        rotate(this.start * PI/6);
+        // translate(this.position.x, this.position.y);
+        // rotate(this.start * PI/6);
+        image(this.img, this.position.x, this.position.y, this.img.width*0.7, this.img.height*0.7);
     } else {
-        translate(this.position.x, this.position.y);
-        rotate(-this.start * PI/6);
+        image(this.img, this.position.x, this.position.y, this.img.width*0.9, this.img.height*0.9);
+        // translate(this.position.x, this.position.y);
+        // rotate(-this.start * PI/6);
     }
-    imageMode(CENTER);
-    image(this.img, 0, 0, this.img.width*0.3, this.img.height*0.3);
-    pop();
+    // imageMode(CENTER);
+    // pop();
 };
 
 // Is the particle still useful?

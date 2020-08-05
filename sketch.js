@@ -7,8 +7,8 @@ WebMidi.enable(function (err) {
         console.log("WebMidi could not be enabled.", err);
     } else {
         // Retrieve an input by name, id or index
-        var input = WebMidi.getInputByName("LoopBe Internal MIDI");
-        // var input = WebMidi.getInputByName("IAC Driver Bus 1");
+        // var input = WebMidi.getInputByName("LoopBe Internal MIDI");
+        var input = WebMidi.getInputByName("IAC Driver Bus 1");
 
         // Listen for a 'cc' message on all channels
         input.addListener('controlchange', "all", function (e) {
@@ -34,7 +34,9 @@ function setup() {
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
-    dslogo = loadImage('assets/deepstatelogo.png');
+    dslogo = loadImage('assets/smtclogo.png');
+    smtclogowhite = loadImage('assets/smtclogo.png');
+    smtclogoblack = loadImage('assets/smtclogo2.png');
     bannerblack = loadImage('assets/bannerblack.png');
     bannerwhite = loadImage('assets/bannerwhite.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
@@ -70,7 +72,7 @@ function draw() {
     // image(capture, width/2, height/2, 960, 720);
     image(space, width/2, height/2, width, height);
 
-    // Shooting stars on C2
+    // UFOs on C2
     if (notes[48] && gate0) {
         ufos.addUFO(createVector(0, height/2 * random()), createVector(10, 0));
         gate0 = 0;
@@ -109,7 +111,7 @@ function draw() {
     ufos.run();
     cats.run();
     reeds.run();
-    ds.run();
+    // ds.run();
 
     // Strobe D1 & Eb1
     if (notes[38]) {
@@ -124,10 +126,12 @@ function draw() {
 
     if (notes[0]) {
         image(ldlogo, 80, 80, 90, 90);
-        // image(bannerblack, 150, height-30, 300, 80);
+        image(smtclogoblack, width-70, 70, 100, 100);
+        image(bannerblack, 150, height-30, 300, 80);
     } else {
         image(ldlogo, 80, 80, 100, 100);
-        // image(bannerwhite, 150, height-30, 300, 80);
+        image(smtclogowhite, width-70, 70, 100, 100);
+        image(bannerwhite, 150, height-30, 300, 80);
     }
 
     // rectMode(CORNER);
