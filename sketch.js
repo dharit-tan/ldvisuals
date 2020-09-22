@@ -34,9 +34,8 @@ function setup() {
     ufo = loadImage('assets/ufo.png');
     cat = loadImage('assets/coolcat.png');
     reed = loadImage('assets/reed.png');
-    dslogo = loadImage('assets/smtclogo.png');
-    smtclogowhite = loadImage('assets/smtclogo.png');
-    smtclogoblack = loadImage('assets/smtclogo2.png');
+    dslogo = loadImage('assets/deepstatelogo.png');
+    // smtclogowhite = loadImage('assets/deepstatelogo.png');
     bannerblack = loadImage('assets/bannerblack.png');
     bannerwhite = loadImage('assets/bannerwhite.png');
     space = createVideo(['assets/space3.mp4'], vidLoad);
@@ -126,11 +125,11 @@ function draw() {
 
     if (notes[0]) {
         image(ldlogo, 80, 80, 90, 90);
-        image(smtclogoblack, width-70, 70, 100, 100);
+        // image(smtclogoblack, width-70, 70, 100, 100);
         image(bannerblack, 150, height-30, 300, 80);
     } else {
         image(ldlogo, 80, 80, 100, 100);
-        image(smtclogowhite, width-70, 70, 100, 100);
+        // image(smtclogowhite, width-70, 70, 100, 100);
         image(bannerwhite, 150, height-30, 300, 80);
     }
 
