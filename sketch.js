@@ -27,6 +27,10 @@ WebMidi.enable(function (err) {
 
 let particleSystem, shootingStarSystem, c, gate;
 
+function preload() {
+    space = createVideo(['assets/space3.mp4'], vidLoad);
+}
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     ldlogo = loadImage('assets/ld-logo-circle.png');
@@ -38,7 +42,6 @@ function setup() {
     // smtclogowhite = loadImage('assets/deepstatelogo.png');
     bannerblack = loadImage('assets/bannerblack.png');
     bannerwhite = loadImage('assets/bannerwhite.png');
-    space = createVideo(['assets/space3.mp4'], vidLoad);
     // capture = createCapture(VIDEO);
     // capture.size(windowWidth, windowHeight);
 
