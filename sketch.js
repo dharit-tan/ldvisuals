@@ -25,8 +25,6 @@ WebMidi.enable(function (err) {
     };
 });
 
-let particleSystem, shootingStarSystem, c, gate;
-
 function preload() {
     space = createVideo(['assets/space3.mp4'], vidLoad);
 }
@@ -49,10 +47,8 @@ function setup() {
     cats = new CatSystem();
     reeds = new CatSystem();
     ds = new LogoSystem();
+    ufoVector = createVector(10, 0);
 
-    shootingStarSystem = new ParticleSystem();
-    particleSystem = new ParticleSystem();
-    c = 0;
     gate0 = 0;
     gate1 = 0;
     gate2 = 0;
@@ -76,11 +72,15 @@ function draw() {
 
     // UFOs on C2
     if (notes[48] && gate0) {
-        ufos.addUFO(createVector(0, height/2 * random()), createVector(10, 0));
+        ufos.addUFO(createVector(0, height/2 * random()), ufoVector);
         gate0 = 0;
     }
     if (!notes[48]) {
         gate0 = 1;
+    }
+
+    if (notes[40]) {
+        ufoVector.x = -10;
     }
 
     // Cats on C#2
@@ -113,7 +113,7 @@ function draw() {
     ufos.run();
     cats.run();
     reeds.run();
-    // ds.run();
+    ds.run();
 
     // Strobe D1 & Eb1
     if (notes[38]) {
@@ -135,8 +135,4 @@ function draw() {
         // image(smtclogowhite, width-70, 70, 100, 100);
         image(bannerwhite, 150, height-30, 300, 80);
     }
-
-    // rectMode(CORNER);
-    // fill('red');
-    // rect(180, 40, 300, 80);
 }

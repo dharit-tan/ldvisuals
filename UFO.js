@@ -1,7 +1,7 @@
 let UFO = function(position, velocity) {
     this.velocity = velocity.copy();
     this.position = position.copy();
-    this.g = 0;
+    this.sizeMult = Math.random() * 0.5 + 0.5;
 };
 
 UFO.prototype.run = function() {
@@ -16,16 +16,7 @@ UFO.prototype.update = function(){
 
 // Method to display
 UFO.prototype.display = function() {
-    push();
-    if (this.g) {
-        // rotate(PI/4);
-        this.g = 0;
-    } else {
-        // rotate(-PI/4);
-        this.g = 1;
-    }
-    image(ufo, this.position.x, this.position.y, ufo.width/2, ufo.height/2);
-    pop();
+    image(ufo, this.position.x, this.position.y, (ufo.width/2) * this.sizeMult, (ufo.height/2) * this.sizeMult);
 };
 
 // Is the particle still useful?
@@ -39,7 +30,6 @@ let UFOSystem = function() {
 
 UFOSystem.prototype.addUFO = function(position, velocity) {
     this.ufos.push(new UFO(position, velocity));
-
 };
 
 UFOSystem.prototype.run = function() {
