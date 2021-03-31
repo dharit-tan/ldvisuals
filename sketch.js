@@ -140,3 +140,7 @@ function draw() {
         image(bannerwhite, 150, height-30, 300, 80);
     }
 }
+
+function windowResized() {
+	  resizeCanvas(windowWidth, windowHeight);
+}
