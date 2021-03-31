@@ -119,7 +119,11 @@ function draw() {
     if (notes[38]) {
         fill(0, 0, 0);
         rect(width/2, height/2, width, height);
-        image(ldlogolg, width/2, height/2);
+        ldlogolg.resize(width/3, 0);
+        image(ldlogolg, width/4, height/4);
+        image(ldlogolg, (width/4) * 3, height/4);
+        image(ldlogolg, width/4, (height/4) * 3);
+        image(ldlogolg, (width/4) * 3, (height/4) * 3);
     }
     if (notes[39]) {
         fill(0, 0, 100);
